@@ -1,22 +1,22 @@
-import { Entity, PrimaryGeneratedColumn, Column, PrimaryColumn } from "typeorm"
+import { Entity, PrimaryGeneratedColumn, Column, PrimaryColumn } from 'typeorm';
 
 @Entity('sumonners')
 export class Summoner {
-    @PrimaryGeneratedColumn()
-    id: number
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @Column()
-    riot_id: string
+  @Column()
+  riot_id: string;
 
-    @Column()
-    account_id: string
+  @Column()
+  account_id: string;
 
-    @Column()
-    name: string
+  @Column()
+  name: string;
 
-    @Column({ unique: true })
-    puuid: string
+  @Column({ unique: true })
+  puuid: string;
 
-    @Column()
-    summoner_level: number
+  @Column()
+  summoner_level: number;
 }

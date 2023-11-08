@@ -10,38 +10,41 @@ import { RiotApiService } from '../services/riot-api.service';
 
 @Injectable()
 export class SummonerV4Service {
+  constructor(
+    private api: RiotApiService,
+    @InjectRepository(Summoner)
+    private summonerRepository: Repository<Summoner>,
+  ) {}
 
-    constructor(
-        private api: RiotApiService,
-        @InjectRepository(Summoner) private summonerRepository: Repository<Summoner>,
-    ) {}
+  async findSummonerByName(name: string): Promise<SummonerDTO> {
+    return await this.api.get<SummonerDTO>(
+      '/lol/summoner/v4/summoners/by-name/{summonerName}',
+      { summonerName: name },
+    );
+  }
 
-    async findSummonerByName(name: string) : Promise<SummonerDTO> {
-        return await this.api.get2<SummonerDTO>('/lol/summoner/v4/summoners/by-name/{summonerName}', {summonerName: name});
-    }
+  async findOrCreate(puuid: string) {
+    const summoner = await this.summonerRepository.findOneBy({
+      puuid: puuid,
+    });
+    if (summoner) return summoner;
 
-    async findOrCreate(puuid: string) {
-        const summoner = await this.summonerRepository.findOneBy({
-            puuid: puuid
-        })
-        if(summoner) return summoner;
+    const newSummoner = new Summoner();
+    newSummoner.puuid = puuid;
+    return newSummoner;
+  }
 
-        const newSummoner = new Summoner()
-        newSummoner.puuid = puuid
-        return newSummoner
-    }
+  async save(summonerDTO: SummonerDTO) {
+    const summoner = await this.findOrCreate(summonerDTO.puuid);
+    summoner.account_id = summonerDTO.accountId;
+    summoner.name = summonerDTO.name;
+    summoner.riot_id = summonerDTO.id;
+    summoner.puuid = summonerDTO.puuid;
+    summoner.summoner_level = summonerDTO.summonerLevel;
+    return this.summonerRepository.save(summoner);
+  }
 
-    async save(summonerDTO: SummonerDTO) {                
-        const summoner = await this.findOrCreate(summonerDTO.puuid)
-        summoner.account_id = summonerDTO.accountId
-        summoner.name = summonerDTO.name
-        summoner.riot_id = summonerDTO.id
-        summoner.puuid = summonerDTO.puuid
-        summoner.summoner_level = summonerDTO.summonerLevel
-        return this.summonerRepository.save(summoner);
-    }
-
-    findAll() {
-        return this.summonerRepository.find();
-    }
+  findAll() {
+    return this.summonerRepository.find();
+  }
 }

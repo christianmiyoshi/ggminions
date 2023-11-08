@@ -7,16 +7,8 @@ import { RiotApiService } from './services/riot-api.service';
 import { ApiLog } from 'src/model/ApiLog';
 
 @Module({
-  imports: [
-    HttpModule,
-    TypeOrmModule.forFeature([Summoner, ApiLog])
-  ],
-  exports: [
-    
-  ],
-  providers: [
-    SummonerV4Service,
-    RiotApiService
-  ]
+  imports: [HttpModule, TypeOrmModule.forFeature([Summoner, ApiLog])],
+  exports: [],
+  providers: [SummonerV4Service, RiotApiService],
 })
 export class LeagueOfLegendsModule {}
