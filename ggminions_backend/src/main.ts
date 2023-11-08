@@ -13,8 +13,7 @@ async function bootstrap() {
   const service = app.get(SummonerV4Service)
 
   try {
-    const result = await firstValueFrom(service.findSummonerByName('chrismiyo'))
-    const summonerDto = result.data;
+    const summonerDto = await service.findSummonerByName('chrismiyo')
     console.log(summonerDto)
     console.log(await service.save(summonerDto))
     const list = await service.findAll()

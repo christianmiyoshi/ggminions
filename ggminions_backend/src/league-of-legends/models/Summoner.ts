@@ -1,16 +1,15 @@
 import { Entity, PrimaryGeneratedColumn, Column, PrimaryColumn } from "typeorm"
-import { SummonerDTO } from "../dto/SummonerDTO"
 
-@Entity()
+@Entity('sumonners')
 export class Summoner {
     @PrimaryGeneratedColumn()
     id: number
 
     @Column()
-    riotId: string
+    riot_id: string
 
     @Column()
-    accountId: string
+    account_id: string
 
     @Column()
     name: string
@@ -19,5 +18,5 @@ export class Summoner {
     puuid: string
 
     @Column()
-    summonerLevel: number
+    summoner_level: number
 }

@@ -5,6 +5,7 @@ import { LeagueOfLegendsModule } from './league-of-legends/league-of-legends.mod
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Summoner } from './league-of-legends/models/Summoner';
 import { ConfigModule } from '@nestjs/config';
+import { ApiLog } from './model/ApiLog';
 
 @Module({
   imports: [
@@ -20,7 +21,7 @@ import { ConfigModule } from '@nestjs/config';
         password: 'root',
         database: 'lol',
         entities: [
-          Summoner
+          Summoner, ApiLog
         ],
         synchronize: true,
       }),
